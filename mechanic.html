@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mikeanic — Mobile Mechanic in Calgary | Diagnostics, Engine, Transmission, Suspension & Oil Change</title>
+  <meta name="description" content="Mikeanic — professional mobile mechanic in Calgary. Diagnostics, engine & transmission repair, suspension service and mobile oil change. Same‑day help, English & Ukrainian." />
+  <meta name="theme-color" content="#0a0d12" />
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <style>
+    :root{
+      --bg:#0a0d12;           /* deep night */
+      --panel:#121822;        /* cards */
+      --muted:#93a0b4;        /* text-muted */
+      --text:#ecf2ff;         /* text */
+      --brand:#ff6a00;        /* orange accent */
+      --brand-2:#4285f4;      /* blue accent for links */
+      --ok:#2fc86b;
+      --danger:#ff4d4d;
+      --radius:18px;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --max:1100px;
+    }
+    html{scroll-behavior:smooth; box-sizing:border-box;}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+    img{max-width:100%;display:block;border-radius:var(--radius)}
+    a{color:var(--brand-2);text-decoration:none}
+    .container{width:min(100%,var(--max));margin-inline:auto;padding:clamp(16px,2.5vw,28px)}
+    .topbar{position:sticky;top:0;z-index:1000;background:rgba(10,13,18,.75);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.06)}
+    .topbar .row{display:flex;gap:16px;align-items:center;justify-content:space-between}
+    .logo{display:flex;gap:10px;align-items:center;font-weight:700;letter-spacing:.3px}
+    .logo .gear{width:26px;height:26px}
+    .cta-inline{display:flex;gap:10px;align-items:center}
+    .btn{appearance:none;border:0;border-radius:999px;padding:12px 18px;font-weight:600;cursor:pointer;box-shadow:var(--shadow);white-space:nowrap}
+    .btn.primary{background:var(--brand);color:#141414}
+    .btn.outline{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.15)}
+    .btn.small{padding:8px 12px;font-size:14px}
+
+    /* HERO */
+    .hero{padding:40px 0 18px;background:radial-gradient(1200px 500px at 80% -50%, rgba(255,106,0,.18), transparent 60%),radial-gradient(900px 500px at -10% -40%, rgba(66,133,244,.18), transparent 70%)}
+    .hero h1{font-size:clamp(28px,6vw,48px);line-height:1.1;margin:.3em 0 .2em}
+    .hero p.lead{color:var(--muted);font-size:clamp(15px,3.5vw,18px);max-width:720px}
+
+    /* slider */
+    .slider-wrap{position:relative;margin-top:22px}
+    .slider{display:grid;grid-auto-flow:column;grid-auto-columns:85%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}
+    .slider::-webkit-scrollbar{height:6px}
+    .slider::-webkit-scrollbar-thumb{background:#1d2532;border-radius:10px}
+    .slide{scroll-snap-align:start;background:linear-gradient(180deg,#171e29, #121822);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:18px;display:grid;grid-template-columns:64px 1fr;gap:16px;align-items:center}
+    .slide .icon{width:56px;height:56px;border-radius:14px;background:rgba(255,255,255,.06);display:grid;place-items:center}
+    .slide h3{margin:0 0 4px;font-size:18px}
+    .slide p{margin:0;color:var(--muted);font-size:14px}
+    .slide .actions{grid-column:1/-1;display:flex;gap:10px;margin-top:12px}
+    .nav-btn{position:absolute;top:40%;transform:translateY(-50%);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);width:42px;height:42px;border-radius:50%;display:grid;place-items:center;cursor:pointer}
+    .nav-btn:hover{background:rgba(255,255,255,.14)}
+    .nav-btn.prev{left:-2px}
+    .nav-btn.next{right:-2px}
+    .dots{display:flex;gap:6px;margin-top:10px;justify-content:center}
+    .dot{width:6px;height:6px;border-radius:999px;background:#2a3342;transition:.2s}
+    .dot.active{background:var(--brand)}
+
+    /* trust + process */
+    .cards{display:grid;grid-template-columns:1fr;gap:14px;margin-top:24px}
+    .card{background:var(--panel);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:16px}
+    .card h3{margin:.2em 0 .4em}
+    .row-2{display:grid;grid-template-columns:1fr;gap:14px}
+
+    /* overview grid */
+    .grid{display:grid;grid-template-columns:1fr;gap:14px}
+    .service-mini{background:var(--panel);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:12px;display:grid;gap:10px}
+    .service-mini h3{margin:0}
+
+    /* service sections */
+    .service{display:grid;grid-template-columns:1fr;gap:16px;margin-top:26px;align-items:center}
+    .service h2{margin:.2em 0}
+    .service ul{margin:8px 0 0 18px;color:var(--muted)}
+
+    /* CTA banner */
+    .cta{margin:36px 0;background:linear-gradient(90deg,rgba(255,106,0,.16),rgba(66,133,244,.16));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:18px;display:grid;gap:12px;text-align:center}
+
+    .cta{max-width:960px; margin:36px auto; justify-items:center;}
+    .btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+    .btn-row > * + *{margin-left:10px}
+    .cta-inline > * + *{margin-left:10px}
+    .slide .actions > * + *{margin-left:10px}
+    .sticky-cta .bar > * + *{margin-left:10px}
+
+
+    /* footer */
+    footer{border-top:1px solid rgba(255,255,255,.08);color:#aeb8cc}
+    footer .cols{display:grid;grid-template-columns:1fr;gap:10px;padding:22px 0}
+    footer .container{padding-inline:clamp(16px,3vw,32px)}
+
+    /* sticky mobile bar */
+    .sticky-cta{position:fixed;left:0;right:0;bottom:10px;z-index:999;display:grid;place-items:center}
+    .sticky-cta .bar{display:flex;gap:10px;background:#111722;border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:8px 10px}
+    .pill{display:flex;gap:8px;align-items:center;border-radius:999px;padding:10px 14px;font-weight:600;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05)}
+    .pill.primary{background:var(--brand);color:#141414;border-color:transparent}
+
+    /* headings */
+    h2{font-size:clamp(20px,4.5vw,28px);line-height:1.2;margin:.4em 0}
+    .eyebrow{letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-size:12px}
+
+    /* larger screens */
+    @media (min-width:760px){
+      .slider{grid-auto-columns:33%}
+      .cards{grid-template-columns:repeat(3,1fr)}
+      .row-2{grid-template-columns:1.2fr .8fr;align-items:center}
+      .grid{grid-template-columns:repeat(3,1fr)}
+      .service{grid-template-columns:1.1fr .9fr}
+      .nav-btn.prev{left:-14px}.nav-btn.next{right:-14px}
+    }
+    @media (min-width:1024px){
+      .slider{grid-auto-columns:28%}
+      .grid{grid-template-columns:repeat(6,1fr)}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container row">
+      <div class="logo" aria-label="Mikeanic logo">
+        <svg class="gear" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z" stroke="currentColor" stroke-width="1.6"/><path d="M19.5 12a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Zm-7.5-9V1m0 22v-2m9-9h-2M4 12H2m16.1 6.1 1.4 1.4M4.5 4.5l1.4 1.4m12.6 0 1.4-1.4M4.5 19.5l1.4-1.4" stroke="currentColor" stroke-opacity=".6"/></svg>
+        <span>Mikeanic</span>
+      </div>
+      <div class="cta-inline">
+        <a class="btn small outline" href="#services">Services</a>
+        <a class="btn small primary" href="tel:+13682996461" aria-label="Call Mikeanic now">Call: (368) 299‑6461</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO / SLIDER -->
+    <section class="hero">
+      <div class="container">
+        <p class="eyebrow">Calgary · English & Ukrainian</p>
+        <h1>Professional Mobile Mechanic in Calgary</h1>
+        <p class="lead">Fast, trustworthy repair at your driveway or office. Diagnostics, engine & transmission work, suspension repair and mobile oil changes. Same‑day service when available.</p>
+
+        <div class="slider-wrap" id="hero-slider" aria-label="Service slider">
+          <button class="nav-btn prev" aria-label="Previous" type="button">&#10094;</button>
+          <div class="slider" id="sliderTrack">
+            <!-- Slides: each slide links to a full section below -->
+            <article class="slide">
+              <div class="icon" aria-hidden="true">🔧</div>
+              <div>
+                <h3>Mobile Mechanic</h3>
+                <p>We come to you for most repairs & maintenance.</p>
+              </div>
+              <div class="actions"><a class="btn small primary" href="#mobile-mechanic">View details</a><a class="btn small outline" href="tel:+13682996461">Call now</a></div>
+            </article>
+
+            <article class="slide">
+              <div class="icon" aria-hidden="true">🩺</div>
+              <div>
+                <h3>Car Diagnostics</h3>
+                <p>OBD-II scan + deep inspection to find the real cause.</p>
+              </div>
+              <div class="actions"><a class="btn small primary" href="#diagnostics">View details</a><a class="btn small outline" href="https://wa.me/13682996461" target="_blank" rel="noopener">WhatsApp</a></div>
+            </article>
+
+            <article class="slide">
+              <div class="icon" aria-hidden="true">🚗</div>
+              <div>
+                <h3>Engine Repair</h3>
+                <p>Tune‑ups, timing components, cooling & full overhauls.</p>
+              </div>
+              <div class="actions"><a class="btn small primary" href="#engine">View details</a><a class="btn small outline" href="tel:+13682996461">Call</a></div>
+            </article>
+
+            <article class="slide">
+              <div class="icon" aria-hidden="true">⚙️</div>
+              <div>
+                <h3>Transmission Repair</h3>
+                <p>Manual & automatic diagnostics, clutch & service.</p>
+              </div>
+              <div class="actions"><a class="btn small primary" href="#transmission">View details</a><a class="btn small outline" href="https://wa.me/13682996461" target="_blank" rel="noopener">WhatsApp</a></div>
+            </article>
+
+            <article class="slide">
+              <div class="icon" aria-hidden="true">🛞</div>
+              <div>
+                <h3>Suspension Repair</h3>
+                <p>Shocks, struts, control arms and bushings replacement.</p>
+              </div>
+              <div class="actions"><a class="btn small primary" href="#suspension">View details</a><a class="btn small outline" href="tel:+13682996461">Call</a></div>
+            </article>
+
+            <article class="slide">
+              <div class="icon" aria-hidden="true">🛢️</div>
+              <div>
+                <h3>Mobile Oil Change</h3>
+                <p>Premium oil & filter at your location. Zero waiting rooms.</p>
+              </div>
+              <div class="actions"><a class="btn small primary" href="#oil">View details</a><a class="btn small outline" href="https://wa.me/13682996461" target="_blank" rel="noopener">WhatsApp</a></div>
+            </article>
+          </div>
+          <button class="nav-btn next" aria-label="Next" type="button">&#10095;</button>
+          <div class="dots" id="dots" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST -->
+    <section class="container" id="why">
+      <h2>Why drivers choose Mikeanic</h2>
+      <div class="cards">
+        <div class="card"><h3>15+ years experience</h3><p class="muted">Professional mechanic with dealership and field background. We speak English & Ukrainian.</p></div>
+        <div class="card"><h3>Quality first</h3><p>OEM‑grade parts on request, clear quotes and warranties on labor.</p></div>
+        <div class="card"><h3>Fast & mobile</h3><p>Serving Calgary and nearby areas. Same‑day appointments when slots are open.</p></div>
+      </div>
+    </section>
+
+    <!-- FUNNEL / HOW IT WORKS -->
+    <section class="container row-2" id="process">
+      <div>
+        <h2>How it works</h2>
+        <ol style="color:var(--muted);padding-left:18px;margin-top:10px">
+          <li><strong>Call or message</strong> us and describe the symptoms.</li>
+          <li><strong>On‑site visit</strong> — we come to your location or arrange a shop lift if needed.</li>
+          <li><strong>Fix the root cause</strong> — transparent pricing, no guesswork.</li>
+          <li><strong>You drive away</strong> with a safe, smooth car.</li>
+        </ol>
+        <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn primary" href="tel:+13682996461">Call (368) 299‑6461</a>
+          <a class="btn outline" href="https://wa.me/13682996461" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn outline" href="https://t.me/+380631046859" target="_blank" rel="noopener">Telegram</a>
+        </div>
+      </div>
+      <div>
+        <img src="https://source.unsplash.com/960x700/?mechanic,car,garage" alt="Mobile mechanic working on a car in Calgary" loading="lazy" />
+      </div>
+    </section>
+
+    <!-- OVERVIEW GRID -->
+    <section class="container" id="services">
+      <h2>Services we offer</h2>
+      <div class="grid">
+        <a class="service-mini" href="#mobile-mechanic"><img src="https://source.unsplash.com/600x380/?mobile,mechanic,tool" alt="Mobile mechanic service" loading="lazy"><h3>Mobile Mechanic</h3><p class="muted">We come to you for most jobs.</p></a>
+        <a class="service-mini" href="#diagnostics"><img src="https://source.unsplash.com/600x380/?obd,scanner,car" alt="Car diagnostics scan tool" loading="lazy"><h3>Car Diagnostics</h3><p class="muted">From codes to the real fix.</p></a>
+        <a class="service-mini" href="#engine"><img src="https://source.unsplash.com/600x380/?engine,repair" alt="Engine repair service" loading="lazy"><h3>Engine Repair</h3><p class="muted">Timing, cooling, sensors.</p></a>
+        <a class="service-mini" href="#transmission"><img src="https://source.unsplash.com/600x380/?transmission,gearbox" alt="Transmission & clutch" loading="lazy"><h3>Transmission Repair</h3><p class="muted">Automatic & manual.</p></a>
+        <a class="service-mini" href="#suspension"><img src="https://source.unsplash.com/600x380/?suspension,shock,strut" alt="Suspension repair" loading="lazy"><h3>Suspension Repair</h3><p class="muted">Shocks, struts, control arms.</p></a>
+        <a class="service-mini" href="#oil"><img src="https://source.unsplash.com/600x380/?oil,filter,car" alt="Mobile oil change" loading="lazy"><h3>Mobile Oil Change</h3><p class="muted">Premium oil at your place.</p></a>
+      </div>
+    </section>
+
+    <!-- SERVICE DETAILS -->
+    <section class="container service" id="mobile-mechanic">
+      <div>
+        <h2>Mobile Mechanic</h2>
+        <p class="muted">Convenient on‑site help for batteries, brakes, belts, alternators, sensors and routine maintenance. If a lift or special equipment is required, we arrange shop time.</p>
+        <ul>
+          <li>On‑site inspection and quick fixes</li>
+          <li>Transparent quotes before work starts</li>
+          <li>Parts options: OEM or high‑quality aftermarket</li>
+        </ul>
+        <div style="margin-top:12px"><a class="btn primary" href="tel:+13682996461">Book mobile visit</a></div>
+      </div>
+      <div><img src="https://source.unsplash.com/960x700/?roadside,assistance,mechanic" alt="Mechanic arriving at customer's location" loading="lazy"></div>
+    </section>
+
+    <section class="container service" id="diagnostics">
+      <div>
+        <h2>Car Diagnostics</h2>
+        <p class="muted">We combine OBD‑II scanning with manual tests to identify the root cause, not just clear codes. Full vehicle scan usually takes 30–40 minutes.</p>
+        <ul>
+          <li>Engine, transmission & electronic systems</li>
+          <li>Hidden faults detection</li>
+          <li><strong>Free comprehensive diagnostic with repair</strong></li>
+        </ul>
+        <div style="margin-top:12px"><a class="btn primary" href="tel:+13682996461">Get diagnostics</a></div>
+      </div>
+      <div><img src="https://source.unsplash.com/960x700/?obd2,diagnostics,car" alt="Diagnostics scanner connected to a car" loading="lazy"></div>
+    </section>
+
+    <section class="container service" id="engine">
+      <div>
+        <h2>Engine Repair</h2>
+        <p class="muted">From tune‑ups and sensor replacement to timing kits and full rebuilds — we service gasoline and diesel engines.</p>
+        <ul>
+          <li>Timing belt/chain, water pump & seals</li>
+          <li>Cooling system repair and flush</li>
+          <li>Intake, ignition & fuel system diagnostics</li>
+        </ul>
+        <div style="margin-top:12px"><a class="btn primary" href="tel:+13682996461">Talk about your engine</a></div>
+      </div>
+      <div><img src="https://source.unsplash.com/960x700/?engine,bay,mechanic" alt="Engine bay after professional repair" loading="lazy"></div>
+    </section>
+
+    <section class="container service" id="transmission">
+      <div>
+        <h2>Transmission Repair</h2>
+        <p class="muted">Professional service for manual and automatic transmissions. We diagnose slipping, harsh shifts, leaks and noises.</p>
+        <ul>
+          <li>Clutch & flywheel replacement</li>
+          <li>Fluid & filter service, leak fixes</li>
+          <li>Robotized gearboxes diagnostics</li>
+        </ul>
+        <div style="margin-top:12px"><a class="btn primary" href="tel:+13682996461">Fix my transmission</a></div>
+      </div>
+      <div><img src="https://source.unsplash.com/960x700/?gearbox,transmission,mechanic" alt="Transmission and clutch service" loading="lazy"></div>
+    </section>
+
+    <section class="container service" id="suspension">
+      <div>
+        <h2>Suspension Repair</h2>
+        <p class="muted">We restore comfort and safety by repairing worn suspension components.</p>
+        <ul>
+          <li>Shocks/struts & mounts replacement</li>
+          <li>Control arms, ball joints, bushings</li>
+          <li>Steering & brake inspection</li>
+        </ul>
+        <div style="margin-top:12px"><a class="btn primary" href="tel:+13682996461">Get a quote</a></div>
+      </div>
+      <div><img src="https://source.unsplash.com/960x700/?suspension,shock,workshop" alt="Suspension components" loading="lazy"></div>
+    </section>
+
+    <section class="container service" id="oil">
+      <div>
+        <h2>Mobile Oil Change</h2>
+        <p class="muted">Save time — we replace oil & filter at your place and dispose of the old fluid responsibly.</p>
+        <ul>
+          <li>Premium oil & OEM‑grade filters</li>
+          <li>Service reminder reset</li>
+          <li>Multi‑point safety check</li>
+        </ul>
+        <div style="margin-top:12px"><a class="btn primary" href="tel:+13682996461">Book oil change</a></div>
+      </div>
+      <div><img src="https://source.unsplash.com/960x700/?oil,change,car,service" alt="Mobile oil change under the hood" loading="lazy"></div>
+    </section>
+
+    <!-- CTA -->
+    <section class="container cta" id="cta">
+      <h2>Ready to get back on the road?</h2>
+      <p class="muted">Call now for a free estimate. Comprehensive diagnostics are free with repair.</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <a class="pill primary" href="tel:+13682996461">Call (368) 299‑6461</a>
+        <a class="pill" href="https://wa.me/13682996461" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="pill" href="https://t.me/+380631046859" target="_blank" rel="noopener">Telegram</a>
+      </div>
+    </section>
+
+    <!-- sticky mobile bar -->
+    <div class="sticky-cta" aria-hidden="false">
+      <div class="bar">
+        <a class="pill primary" href="tel:+13682996461">Call</a>
+        <a class="pill" href="https://wa.me/13682996461" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="pill" href="https://t.me/+380631046859" target="_blank" rel="noopener">Telegram</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="container cols">
+      <div>
+        <strong>Mikeanic</strong> — mobile auto repair in Calgary<br>
+        Hours: 8:00 – 20:00 daily
+      </div>
+      <div>
+        Phone: <a href="tel:+13682996461">(368) 299‑6461</a> · WhatsApp: <a href="https://wa.me/13682996461" target="_blank" rel="noopener">chat</a> · Telegram: <a href="https://t.me/+380631046859" target="_blank" rel="noopener">@mikeanic</a>
+      </div>
+      <div>© <span id="year"></span> Mikeanic. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- SEO: LocalBusiness schema -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"AutoRepair",
+    "name":"Mikeanic",
+    "image":"https://source.unsplash.com/600x380/?mechanic,car",
+    "telephone":"+1-368-299-6461",
+    "areaServed":"Calgary, Alberta, Canada",
+    "address":{ "@type":"PostalAddress", "addressLocality":"Calgary", "addressCountry":"CA" },
+    "openingHours":"Mo-Su 08:00-20:00",
+    "sameAs":["https://wa.me/13682996461","https://t.me/+380631046859"],
+    "description":"Professional mobile mechanic. Diagnostics, engine, transmission, suspension and oil change. English & Ukrainian."
+  }
+  </script>
+
+  <script>
+    const track = document.getElementById('sliderTrack');
+    const dots = document.getElementById('dots');
+    const prev = document.querySelector('.nav-btn.prev');
+    const next = document.querySelector('.nav-btn.next');
+
+    function updateDots(){
+      const slides = Array.from(track.children);
+      const idx = Math.round(track.scrollLeft / (track.clientWidth * 0.85));
+      dots.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active', i===idx));
+    }
+    function buildDots(){
+      dots.innerHTML = '';
+      const count = track.children.length;
+      for(let i=0;i<count;i++){
+        const d=document.createElement('div');d.className='dot'+(i===0?' active':'');
+        d.addEventListener('click',()=>{
+          const w = track.clientWidth*0.85; track.scrollTo({left:w*i, behavior:'smooth'});
+        });
+        dots.appendChild(d);
+      }
+    }
+    function nudge(dir){
+      const w = track.clientWidth*0.85; track.scrollBy({left:w*dir, behavior:'smooth'});
+    }
+    prev.addEventListener('click',()=>nudge(-1));
+    next.addEventListener('click',()=>nudge(1));
+    track.addEventListener('scroll',()=>{window.requestAnimationFrame(updateDots)});
+    window.addEventListener('resize',updateDots);
+    buildDots();
+    updateDots();
+
+    // footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
