@@ -210,6 +210,74 @@
     /* универсальный ряд кнопок (если используется вне карточек) */
     .btn-row{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-start; }
     .btn-row > * + *{ margin-left:10px; } /* fallback для Safari без gap */
+
+    /* Compact hero spacing */
+    .hero{ padding:18px 0 8px; }
+    .hero h1{ margin:.12em 0; }
+    .hero .lead{ margin-top:6px; }
+
+    /* Чуть компактнее карточки первого экрана (если нужно) */
+    .service-card{ min-height:200px; }          /* было выше */
+    .service-card .content{ padding:14px; }     /* было 16–20 */
+
+    /* Меньше сами кнопки сервиса */
+    .btn.small{ padding:10px 14px; font-size:14px; }  /* раньше были крупнее */
+    .btn{ padding:10px 16px; }                        /* опционально: общая усадка */
+
+    /* Чуть меньше отступ между шапкой и первым контейнером */
+    .topbar + main .hero{ padding-top:14px; }  /* extra страховка */
+
+    /* LEGACY SLIDER STYLES (COMMENTED OUT) */
+    /*
+    .slider-wrap{position:relative;margin-top:22px}
+    .slider{display:grid;grid-auto-flow:column;grid-auto-columns:85%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}
+    .slider::-webkit-scrollbar{height:6px}
+    .slider::-webkit-scrollbar-thumb{background:#1d2532;border-radius:10px}
+    .slide{scroll-snap-align:start;background:linear-gradient(180deg,#171e29,#121822);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:18px;display:grid;grid-template-columns:64px 1fr;gap:16px;align-items:center}
+    .slide .icon{width:56px;height:56px;border-radius:14px;background:rgba(255,255,255,.06);display:grid;place-items:center}
+    .slide h3{margin:0 0 4px;font-size:18px}
+    .slide p{margin:0;color:var(--muted);font-size:14px}
+    .slide .actions{grid-column:1/-1;display:flex;gap:10px;margin-top:12px}
+    @supports not (gap:10px){.slide .actions>*+*{margin-left:10px}}
+    .nav-btn{position:absolute;top:40%;transform:translateY(-50%);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);width:42px;height:42px;border-radius:50%;display:grid;place-items:center;cursor:pointer}
+    .nav-btn:hover{background:rgba(255,255,255,.14)}
+    .nav-btn.prev{left:-2px}
+    .nav-btn.next{right:-2px}
+    .dots{display:flex;gap:6px;margin-top:10px;justify-content:center}
+    .dot{width:6px;height:6px;border-radius:999px;background:#2a3342;transition:.2s}
+    .dot.active{background:var(--brand)}
+    @media(min-width:760px){.slider{grid-auto-columns:33%}.nav-btn.prev{left:-14px}.nav-btn.next{right:-14px}}
+    @media(min-width:1024px){.slider{grid-auto-columns:28%}}
+    */
+
+    /* Общая строка кнопок (даже если кнопка одна) */
+    .btn-row{
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;              /* отступ между кнопками на мобилке, если будет 2+ */
+      justify-content: flex-start;
+    }
+
+    /* Отступ от списка к кнопке — только в деталях услуг */
+    .service ul + .btn-row{
+      margin-top: 20px;       /* моб */
+    }
+    @media (min-width: 768px){
+      .service ul + .btn-row{ margin-top: 18px; }
+    }
+    @media (min-width: 1024px){
+      .service ul + .btn-row{ margin-top: 45px; } /* десктоп */
+    }
+
+    /* Чуть ровнее вертикальный ритм внутри списка */
+    .service ul{
+      margin-top: 12px;       /* от заголовка/параграфа до списка */
+      margin-bottom: 0;       /* дальше отступ задаёт .btn-row */
+      padding-left: 22px;     /* чтобы маркеры не липли к краю */
+    }
+    .service li + li{ margin-top: 8px; }
+
   </style>
 </head>
 <body>
@@ -233,6 +301,98 @@
   </header>
 
   <main>
+
+    <!-- HERO SLIDER (COMMENTED OUT) -->
+    <!--
+    <section class="hero">
+      <div class="container">
+        <p class="eyebrow">Calgary · English & Ukrainian</p>
+        <h1>Professional Mobile Mechanic in Calgary</h1>
+        <p class="lead">Fast, trustworthy repair at your driveway or office. Diagnostics, engine & transmission work, suspension repair and mobile oil changes. Same-day service when available.</p>
+
+        <div class="slider-wrap" id="hero-slider" aria-label="Service slider">
+          <button class="nav-btn prev" aria-label="Previous" type="button">&#10094;</button>
+
+          <div class="slider" id="sliderTrack">
+            <article class="slide">
+              <div class="icon" aria-hidden="true">🔧</div>
+              <div>
+                <h3>Mobile Mechanic</h3>
+                <p>We come to you for most repairs & maintenance.</p>
+              </div>
+              <div class="actions">
+                <a class="btn small primary" href="#mobile-mechanic">View details</a>
+                <a class="btn small outline" href="tel:+13682996461">Call now</a>
+              </div>
+            </article>
+
+            <article class="slide">
+              <div class="icon" aria-hidden="true">🩺</div>
+              <div>
+                <h3>Car Diagnostics</h3>
+                <p>OBD-II scan + deep inspection to find the real cause.</p>
+              </div>
+              <div class="actions">
+                <a class="btn small primary" href="#diagnostics">View details</a>
+                <a class="btn small outline" href="https://wa.me/13682996461" target="_blank" rel="noopener">WhatsApp</a>
+              </div>
+            </article>
+
+            <article class="slide">
+              <div class="icon" aria-hidden="true">🚗</div>
+              <div>
+                <h3>Engine Repair</h3>
+                <p>Tune-ups, timing components, cooling & full overhauls.</p>
+              </div>
+              <div class="actions">
+                <a class="btn small primary" href="#engine">View details</a>
+                <a class="btn small outline" href="tel:+13682996461">Call</a>
+              </div>
+            </article>
+
+            <article class="slide">
+              <div class="icon" aria-hidden="true">⚙️</div>
+              <div>
+                <h3>Transmission Repair</h3>
+                <p>Manual & automatic diagnostics, clutch & service.</p>
+              </div>
+              <div class="actions">
+                <a class="btn small primary" href="#transmission">View details</a>
+                <a class="btn small outline" href="https://wa.me/13682996461" target="_blank" rel="noopener">WhatsApp</a>
+              </div>
+            </article>
+
+            <article class="slide">
+              <div class="icon" aria-hidden="true">🛞</div>
+              <div>
+                <h3>Suspension Repair</h3>
+                <p>Shocks, struts, control arms and bushings replacement.</p>
+              </div>
+              <div class="actions">
+                <a class="btn small primary" href="#suspension">View details</a>
+                <a class="btn small outline" href="tel:+13682996461">Call</a>
+              </div>
+            </article>
+
+            <article class="slide">
+              <div class="icon" aria-hidden="true">🛢️</div>
+              <div>
+                <h3>Mobile Oil Change</h3>
+                <p>Premium oil & filter at your location. Zero waiting rooms.</p>
+              </div>
+              <div class="actions">
+                <a class="btn small primary" href="#oil">View details</a>
+                <a class="btn small outline" href="https://wa.me/13682996461" target="_blank" rel="noopener">WhatsApp</a>
+              </div>
+            </article>
+          </div>
+
+          <button class="nav-btn next" aria-label="Next" type="button">&#10095;</button>
+          <div class="dots" id="dots" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+    -->
     <!-- HERO / SLIDER -->
     <section class="hero">
       <div class="container">
@@ -242,7 +402,7 @@
 
         <!-- All services visible (no slider) -->
         <div class="services-grid" aria-label="Quick services">
-          <article class="service-card" style="--bg:url('https://source.unsplash.com/1200x800/?mobile,mechanic,garage');">
+          <article class="service-card" style="--bg:url('img/hero/hero-mobile-mechanic.jpeg');">
             <div class="content">
               <h3>Mobile Mechanic</h3>
               <p>We come to you for most repairs & maintenance.</p>
@@ -251,7 +411,7 @@
             </div>
           </article>
 
-          <article class="service-card" style="--bg:url('https://source.unsplash.com/1200x800/?obd,diagnostics,car');">
+          <article class="service-card" style="--bg:url('img/hero/hero-diagnostics.jpeg');">
             <div class="content">
               <h3>Car Diagnostics</h3>
               <p>OBD-II scan + deep inspection to find the real cause.</p>
@@ -260,7 +420,7 @@
             </div>
           </article>
 
-          <article class="service-card" style="--bg:url('https://source.unsplash.com/1200x800/?engine,repair');">
+          <article class="service-card" style="--bg:url('img/hero/hero-engine.jpeg');">
             <div class="content">
               <h3>Engine Repair</h3>
               <p>Tune‑ups, timing components, cooling & full overhauls.</p>
@@ -269,7 +429,7 @@
             </div>
           </article>
 
-          <article class="service-card" style="--bg:url('https://source.unsplash.com/1200x800/?transmission,gearbox');">
+          <article class="service-card" style="--bg:url('img/hero/hero-transmission.jpeg');">
             <div class="content">
               <h3>Transmission Repair</h3>
               <p>Manual & automatic diagnostics, clutch & service.</p>
@@ -278,7 +438,7 @@
             </div>
           </article>
 
-          <article class="service-card" style="--bg:url('https://source.unsplash.com/1200x800/?suspension,strut');">
+          <article class="service-card" style="--bg:url('img/hero/hero-suspension.jpeg');">
             <div class="content">
               <h3>Suspension Repair</h3>
               <p>Shocks, struts, control arms and bushings replacement.</p>
@@ -287,7 +447,7 @@
             </div>
           </article>
 
-          <article class="service-card" style="--bg:url('https://source.unsplash.com/1200x800/?oil,change,car');">
+          <article class="service-card" style="--bg:url('img/hero/hero-oil.jpeg');">
             <div class="content">
               <h3>Mobile Oil Change</h3>
               <p>Premium oil & filter at your location. Zero waiting rooms.</p>
@@ -326,7 +486,7 @@
         </div>
       </div>
       <div>
-        <img src="https://source.unsplash.com/960x700/?mechanic,car,garage" alt="Mobile mechanic working on a car in Calgary" loading="lazy" />
+        <img src="img/misc/process-visit.jpeg" alt="Mobile mechanic working on a car in Calgary" loading="lazy" />
       </div>
     </section>
 
@@ -334,12 +494,12 @@
     <section class="container" id="services">
       <h2>Services we offer</h2>
       <div class="grid">
-        <a class="service-mini" href="#mobile-mechanic"><img src="https://source.unsplash.com/600x380/?mobile,mechanic,tool" alt="Mobile mechanic service" loading="lazy"><h3>Mobile Mechanic</h3><p class="muted">We come to you for most jobs.</p></a>
-        <a class="service-mini" href="#diagnostics"><img src="https://source.unsplash.com/600x380/?obd,scanner,car" alt="Car diagnostics scan tool" loading="lazy"><h3>Car Diagnostics</h3><p class="muted">From codes to the real fix.</p></a>
-        <a class="service-mini" href="#engine"><img src="https://source.unsplash.com/600x380/?engine,repair" alt="Engine repair service" loading="lazy"><h3>Engine Repair</h3><p class="muted">Timing, cooling, sensors.</p></a>
-        <a class="service-mini" href="#transmission"><img src="https://source.unsplash.com/600x380/?transmission,gearbox" alt="Transmission & clutch" loading="lazy"><h3>Transmission Repair</h3><p class="muted">Automatic & manual.</p></a>
-        <a class="service-mini" href="#suspension"><img src="https://source.unsplash.com/600x380/?suspension,shock,strut" alt="Suspension repair" loading="lazy"><h3>Suspension Repair</h3><p class="muted">Shocks, struts, control arms.</p></a>
-        <a class="service-mini" href="#oil"><img src="https://source.unsplash.com/600x380/?oil,filter,car" alt="Mobile oil change" loading="lazy"><h3>Mobile Oil Change</h3><p class="muted">Premium oil at your place.</p></a>
+        <a class="service-mini" href="#mobile-mechanic"><img src="img/grid/grid-mobile-mechanic.jpeg" alt="Mobile mechanic service" loading="lazy"><h3>Mobile Mechanic</h3><p class="muted">We come to you for most jobs.</p></a>
+        <a class="service-mini" href="#diagnostics"><img src="img/grid/grid-diag.jpeg" alt="Car diagnostics scan tool" loading="lazy"><h3>Car Diagnostics</h3><p class="muted">From codes to the real fix.</p></a>
+        <a class="service-mini" href="#engine"><img src="img/grid/grid-engine.jpeg" alt="Engine repair service" loading="lazy"><h3>Engine Repair</h3><p class="muted">Timing, cooling, sensors.</p></a>
+        <a class="service-mini" href="#transmission"><img src="img/grid/grid-trans.jpeg" alt="Transmission & clutch" loading="lazy"><h3>Transmission Repair</h3><p class="muted">Automatic & manual.</p></a>
+        <a class="service-mini" href="#suspension"><img src="img/grid/grid-susp.jpeg" alt="Suspension repair" loading="lazy"><h3>Suspension Repair</h3><p class="muted">Shocks, struts, control arms.</p></a>
+        <a class="service-mini" href="#oil"><img src="img/grid/grid-oil.jpeg" alt="Mobile oil change" loading="lazy"><h3>Mobile Oil Change</h3><p class="muted">Premium oil at your place.</p></a>
       </div>
     </section>
 
@@ -353,9 +513,11 @@
           <li>Transparent quotes before work starts</li>
           <li>Parts options: OEM or high‑quality aftermarket</li>
         </ul>
-        <div style="margin-top:12px"><a class="btn primary" href="tel:+13682996461">Book mobile visit</a></div>
+        <div class="btn-row">
+          <a class="btn primary" href="tel:+13682996461">Book mobile visit</a>
+        </div>
       </div>
-      <div><img src="https://source.unsplash.com/960x700/?roadside,assistance,mechanic" alt="Mechanic arriving at customer's location" loading="lazy"></div>
+      <div><img src="img/details/details-mobile-mechanic.jpeg" alt="Mechanic arriving at customer's location" loading="lazy"></div>
     </section>
 
     <section class="container service" id="diagnostics">
@@ -367,9 +529,9 @@
           <li>Hidden faults detection</li>
           <li><strong>Free comprehensive diagnostic with repair</strong></li>
         </ul>
-        <div style="margin-top:12px"><a class="btn primary" href="tel:+13682996461">Get diagnostics</a></div>
+        <div class="btn-row"><a class="btn primary" href="tel:+13682996461">Get diagnostics</a></div>
       </div>
-      <div><img src="https://source.unsplash.com/960x700/?obd2,diagnostics,car" alt="Diagnostics scanner connected to a car" loading="lazy"></div>
+      <div><img src="img/details/details-diagnostics.jpeg" alt="Diagnostics scanner connected to a car" loading="lazy"></div>
     </section>
 
     <section class="container service" id="engine">
@@ -381,9 +543,9 @@
           <li>Cooling system repair and flush</li>
           <li>Intake, ignition & fuel system diagnostics</li>
         </ul>
-        <div style="margin-top:12px"><a class="btn primary" href="tel:+13682996461">Talk about your engine</a></div>
+        <div class="btn-row"><a class="btn primary" href="tel:+13682996461">Talk about your engine</a></div>
       </div>
-      <div><img src="https://source.unsplash.com/960x700/?engine,bay,mechanic" alt="Engine bay after professional repair" loading="lazy"></div>
+      <div><img src="img/details/details-engine.jpeg" alt="Engine bay after professional repair" loading="lazy"></div>
     </section>
 
     <section class="container service" id="transmission">
@@ -395,9 +557,9 @@
           <li>Fluid & filter service, leak fixes</li>
           <li>Robotized gearboxes diagnostics</li>
         </ul>
-        <div style="margin-top:12px"><a class="btn primary" href="tel:+13682996461">Fix my transmission</a></div>
+        <div class="btn-row"><a class="btn primary" href="tel:+13682996461">Fix my transmission</a></div>
       </div>
-      <div><img src="https://source.unsplash.com/960x700/?gearbox,transmission,mechanic" alt="Transmission and clutch service" loading="lazy"></div>
+      <div><img src="img/details/details-transmission.jpeg" alt="Transmission and clutch service" loading="lazy"></div>
     </section>
 
     <section class="container service" id="suspension">
@@ -409,9 +571,9 @@
           <li>Control arms, ball joints, bushings</li>
           <li>Steering & brake inspection</li>
         </ul>
-        <div style="margin-top:12px"><a class="btn primary" href="tel:+13682996461">Get a quote</a></div>
+        <div class="btn-row"><a class="btn primary" href="tel:+13682996461">Get a quote</a></div>
       </div>
-      <div><img src="https://source.unsplash.com/960x700/?suspension,shock,workshop" alt="Suspension components" loading="lazy"></div>
+      <div><img src="img/details/details-suspension.jpeg" alt="Suspension components" loading="lazy"></div>
     </section>
 
     <section class="container service" id="oil">
@@ -423,9 +585,9 @@
           <li>Service reminder reset</li>
           <li>Multi‑point safety check</li>
         </ul>
-        <div style="margin-top:12px"><a class="btn primary" href="tel:+13682996461">Book oil change</a></div>
+        <div class="btn-row"><a class="btn primary" href="tel:+13682996461">Book oil change</a></div>
       </div>
-      <div><img src="https://source.unsplash.com/960x700/?oil,change,car,service" alt="Mobile oil change under the hood" loading="lazy"></div>
+      <div><img src="img/details/details-oil.jpeg" alt="Mobile oil change under the hood" loading="lazy"></div>
     </section>
 
     <!-- CTA -->
@@ -513,6 +675,45 @@
 
     // footer year
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* LEGACY SLIDER JS (COMMENTED OUT) */
+    /*
+    (function(){
+      const track = document.getElementById('sliderTrack');
+      const dots  = document.getElementById('dots');
+      const prev  = document.querySelector('.nav-btn.prev');
+      const next  = document.querySelector('.nav-btn.next');
+      if(!track || !dots || !prev || !next) return;
+
+      function updateDots(){
+        const idx = Math.round(track.scrollLeft / (track.clientWidth * 0.85));
+        dots.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active', i===idx));
+      }
+      function buildDots(){
+        dots.innerHTML = '';
+        const count = track.children.length;
+        for(let i=0;i<count;i++){
+          const d = document.createElement('div');
+          d.className = 'dot'+(i===0?' active':'');
+          d.addEventListener('click',()=>{
+            const w = track.clientWidth * 0.85;
+            track.scrollTo({left:w*i, behavior:'smooth'});
+          });
+          dots.appendChild(d);
+        }
+      }
+      function nudge(dir){
+        const w = track.clientWidth * 0.85;
+        track.scrollBy({left:w*dir, behavior:'smooth'});
+      }
+      prev.addEventListener('click',()=>nudge(-1));
+      next.addEventListener('click',()=>nudge(1));
+      track.addEventListener('scroll',()=>requestAnimationFrame(updateDots));
+      window.addEventListener('resize',updateDots);
+      buildDots(); updateDots();
+    })();
+    */
   </script>
+
 </body>
 </html>
