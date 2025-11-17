@@ -42,6 +42,29 @@
     .hero h1{font-size:clamp(28px,6vw,48px);line-height:1.1;margin:.3em 0 .2em}
     .hero p.lead{color:var(--muted);font-size:clamp(15px,3.5vw,18px);max-width:720px}
 
+    .header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-width: 0;
+    }
+    .logo {display:flex; align-items:center; min-width:0;}
+    .logo .wordmark {display:block; height:28px; width:auto;}
+    .nav-actions { display:flex; align-items:center; gap:12px; flex-shrink:0; }
+    .nav-actions .btn { white-space:nowrap; }
+
+    @media (max-width: 480px) {
+      .logo .wordmark { height:22px; }
+      .nav-actions { gap:8px; }
+      .nav-actions .btn { padding:8px 12px; font-size:14px; }
+      .btn-call { font-weight:700; }
+    }
+
+    @media (max-width: 380px) {
+      .btn-services { display:none; }
+    }
+
     /* slider */
     .slider-wrap{position:relative;margin-top:22px}
     .slider{display:grid;grid-auto-flow:column;grid-auto-columns:85%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}
@@ -278,20 +301,79 @@
     }
     .service li + li{ margin-top: 8px; }
 
+    .nav{position:sticky;top:0;z-index:50;background:#0a0d12;}
+    .nav-row{display:flex;align-items:center;gap:12px;padding:10px 16px;}
+    .nav-row > *{min-width:0;}
+
+    /* Лого-вордмарк */
+    .brand{display:flex;align-items:center;min-width:0}
+    .logo-mikeanic{height:26px;width:auto;display:block}
+
+    /* Кнопки в шапке */
+    .pill.services{white-space:nowrap;padding:8px 12px}
+    .btn.call{white-space:nowrap;padding:10px 14px}
+    .btn.call .txt-short{display:none}
+
+    /* Узкие экраны — используем короткий текст у call */
+    @media (max-width: 420px){
+      .topbar .row {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .pill.services{padding:6px 10px;font-size:14px}
+      .btn.call{padding:8px 12px;font-size:14px}
+      .btn.call .txt-long{display:none}
+      .btn.call .txt-short{display:inline}
+    }
+
+    /* Совсем узкие (если всё ещё не влазит, можно скрыть Services) */
+    @media (max-width: 360px){
+      .pill.services{display:none}
+    }
+
+    /* Логотип: не даём вылазить за ширину экрана */
+    .site-header .logo img {
+      height: 28px;           /* базовая высота логотипа */
+      max-width: 60vw;        /* чтобы слева не «ломало» сетку */
+      width: auto;
+      display: block;
+    }
+
+    /* Чуть крупнее на больших брейкпоинтах */
+    @media (min-width: 480px) {
+      .site-header .logo img { height: 30px; }
+    }
+    @media (min-width: 768px) {
+      .site-header .logo img { height: 34px; }
+    }
+
+    /* Немного уплотним правые кнопки, чтобы всё поместилось */
+    .site-header .nav { gap: 8px; }
+    .site-header .nav .services { padding: 8px 12px; }
+    .site-header .nav .btn-call { padding: 10px 14px; font-size: 14px; white-space: nowrap; }
+
+    /* На очень узких экранах можно скрыть «Services», если всё равно не влазит */
+    @media (max-width: 380px) {
+      .site-header .nav .services { display: none; }
+    }
+
+    .logo img { display:block; width: 120px; height:auto; border-radius:0; }
+    @media (max-width:420px){
+      .pill { padding-inline:12px; font-size:14px; } /* чтобы всё влезало */
+    }
+
+    /* чтобы шапка на мобиле точно влезала */
+    .header .brand{min-width:0}
+    .pill{padding-inline:12px} /* при необходимости уменьшить кнопки в правом краю */
+
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="container row">
-      <div class="logo" aria-label="Mikeanic logo">
-        <!-- Inline SVG logo in site colors (cap + wordmark) -->
-        <svg class="gear" viewBox="0 0 64 32" aria-hidden="true">
-          <!-- cap -->
-          <path d="M4 16c0-7 6-12 12-12 6.5 0 11 4.5 12.5 9.5L60 16v4H4z" fill="var(--brand)"/>
-          <!-- simple brim -->
-          <rect x="44" y="17" width="14" height="3" rx="1.5" fill="var(--brand)"/>
-        </svg>
-        <span style="font-weight:800;letter-spacing:.2px">Mikeanic</span>
+      <div class="logo">
+        <img src="img/logo.svg" alt="Mikeanic">
       </div>
       <div class="cta-inline">
         <a class="btn small outline" href="#services">Services</a>
