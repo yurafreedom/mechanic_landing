@@ -7,6 +7,10 @@
   <meta name="description" content="Mikeanic — professional mobile mechanic in Calgary. Diagnostics, engine & transmission repair, suspension service and mobile oil change. Same‑day help, English & Ukrainian." />
   <meta name="theme-color" content="#0a0d12" />
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+
+  <!-- Пріоритизація hero-зображення -->
+  <link rel="preload" as="image" href="img/hero/hero-mobile-mechanic-1280.avif" imagesrcset="img/hero/hero-mobile-mechanic-640.avif 640w, img/hero/hero-mobile-mechanic-960.avif 960w, img/hero/hero-mobile-mechanic-1280.avif 1280w, img/hero/hero-mobile-mechanic-1600.avif 1600w" imagesizes="(max-width:760px) 100vw, 44vw">
+
   <style>
     :root{
       --bg:#0a0d12;           /* deep night */
@@ -628,13 +632,49 @@
     /* маркеры списков мягче */
     .container li::marker{ color:rgba(255,255,255,.5); }
 
+    /* отключаем старый фон карточек */
+    .service-card::before{ content:none !important; }
+
+    /* фон через <picture> */
+    .service-card{ position:relative; overflow:hidden; isolation:isolate; }
+    .service-card picture.bg{ position:absolute; inset:0; z-index:0; display:block; }
+    .service-card picture.bg img{
+      width:100%; height:100%; object-fit:cover;
+      filter:saturate(.9) brightness(.9);
+      transform:scale(1.02); transition:transform .5s ease;
+    }
+    .service-card:hover picture.bg img{ transform:scale(1.06); }
+
+    /* градиент-оверлей поверх фото */
+    .service-card::after{
+      content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.68)),
+        radial-gradient(120% 120% at 90% -10%, rgba(255,106,0,.25), transparent 70%);
+    }
+
+    /* контент поверх всего */
+    .service-card .content{ position:relative; z-index:2; }
+
+    /* Герой-карточки держим в стабильном соотношении */
+    .hero .service-card{ aspect-ratio: 3 / 2; }      /* мобайл и планшет */
+    @media (min-width:1024px){
+      .hero .service-card{ aspect-ratio: 16 / 10; }  /* десктоп, если нужно чуть шире */
+    }
+
+    /* отложенная раскладка секций ниже фолда */
+    .below-fold{
+      content-visibility: auto;
+      contain-intrinsic-size: 1px 1000px; /* «скелет» до первого скролла */
+    }
+
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="container row">
       <div class="logo">
-        <img src="img/logo.svg" alt="Mikeanic">
+        <img src="img/logo.svg" width="120" height="28" alt="Mikeanic" decoding="async">
       </div>
       <div class="cta-inline">
         <a class="btn small outline" href="#services">Services</a>
@@ -747,61 +787,162 @@
       <div class="container">
         <p class="eyebrow">Calgary · English & Ukrainian</p>
         <h1>Professional Mobile Mechanic in Calgary</h1>
-        <p class="lead">Fast, trustworthy repair at your driveway or office. Diagnostics, engine & transmission work, suspension repair and mobile oil changes. Same‑day service when available.</p>
+        <p class="lead">Fast, trustworthy repair at your driveway or office. Diagnostics, engine & transmission work, suspension repair and mobile oil changes. Same-day service when available.</p>
 
-        <!-- All services visible (no slider) -->
         <div class="services-grid" aria-label="Quick services">
-          <article class="service-card" style="--bg:url('img/hero/hero-mobile-mechanic.jpeg');">
+          <!-- Mobile Mechanic -->
+          <article class="service-card">
+            <picture class="bg">
+              <source type="image/avif" srcset="
+                img/hero/hero-mobile-mechanic-640.avif   640w,
+                img/hero/hero-mobile-mechanic-960.avif   960w,
+                img/hero/hero-mobile-mechanic-1280.avif 1280w,
+                img/hero/hero-mobile-mechanic-1600.avif 1600w" sizes="(max-width:700px) 100vw, (max-width:1024px) 50vw, 33vw">
+              <source type="image/webp" srcset="
+                img/hero/hero-mobile-mechanic-640.webp   640w,
+                img/hero/hero-mobile-mechanic-960.webp   960w,
+                img/hero/hero-mobile-mechanic-1280.webp 1280w,
+                img/hero/hero-mobile-mechanic-1600.webp 1600w" sizes="(max-width:700px) 100vw, (max-width:1024px) 50vw, 33vw">
+              <img src="img/hero/hero-mobile-mechanic.jpeg" alt="" width="1600" height="1066" aria-hidden="true" decoding="async" fetchpriority="high">
+            </picture>
             <div class="content">
               <h3>Mobile Mechanic</h3>
               <p>We come to you for most repairs & maintenance.</p>
               <div class="spacer"></div>
-              <div class="actions btn-row"><a class="btn small primary" href="#mobile-mechanic">View details</a><a class="btn small outline" href="tel:+13682996461">Call now</a></div>
+              <div class="actions btn-row">
+                <a class="btn small primary" href="#mobile-mechanic">View details</a>
+                <a class="btn small outline" href="tel:+13682996461">Call now</a>
+              </div>
             </div>
           </article>
 
-          <article class="service-card" style="--bg:url('img/hero/hero-diagnostics.jpeg');">
+          <!-- Car Diagnostics -->
+          <article class="service-card">
+            <picture class="bg">
+              <source type="image/avif" srcset="
+                img/hero/hero-diagnostics-640.avif   640w,
+                img/hero/hero-diagnostics-960.avif   960w,
+                img/hero/hero-diagnostics-1280.avif 1280w,
+                img/hero/hero-diagnostics-1600.avif 1600w" sizes="(max-width:700px) 100vw, (max-width:1024px) 50vw, 33vw">
+              <source type="image/webp" srcset="
+                img/hero/hero-diagnostics-640.webp   640w,
+                img/hero/hero-diagnostics-960.webp   960w,
+                img/hero/hero-diagnostics-1280.webp 1280w,
+                img/hero/hero-diagnostics-1600.webp 1600w" sizes="(max-width:700px) 100vw, (max-width:1024px) 50vw, 33vw">
+              <img src="img/hero/hero-diagnostics.jpeg" alt="" aria-hidden="true" width="1600" height="1066" decoding="async">
+            </picture>
             <div class="content">
               <h3>Car Diagnostics</h3>
               <p>OBD-II scan + deep inspection to find the real cause.</p>
               <div class="spacer"></div>
-              <div class="actions btn-row"><a class="btn small primary" href="#diagnostics">View details</a><a class="btn small outline" href="https://wa.me/13682996461" target="_blank" rel="noopener">WhatsApp</a></div>
+              <div class="actions btn-row">
+                <a class="btn small primary" href="#diagnostics">View details</a>
+                <a class="btn small outline" href="https://wa.me/13682996461" target="_blank" rel="noopener">WhatsApp</a>
+              </div>
             </div>
           </article>
 
-          <article class="service-card" style="--bg:url('img/hero/hero-engine.jpeg');">
+          <!-- Engine Repair -->
+          <article class="service-card">
+            <picture class="bg">
+              <source type="image/avif" srcset="
+                img/hero/hero-engine-640.avif   640w,
+                img/hero/hero-engine-960.avif   960w,
+                img/hero/hero-engine-1280.avif 1280w,
+                img/hero/hero-engine-1600.avif 1600w" sizes="(max-width:700px) 100vw, (max-width:1024px) 50vw, 33vw">
+              <source type="image/webp" srcset="
+                img/hero/hero-engine-640.webp   640w,
+                img/hero/hero-engine-960.webp   960w,
+                img/hero/hero-engine-1280.webp 1280w,
+                img/hero/hero-engine-1600.webp 1600w" sizes="(max-width:700px) 100vw, (max-width:1024px) 50vw, 33vw">
+              <img src="img/hero/hero-engine.jpeg" alt="" aria-hidden="true" width="1600" height="1066" decoding="async">
+            </picture>
             <div class="content">
               <h3>Engine Repair</h3>
-              <p>Tune‑ups, timing components, cooling & full overhauls.</p>
+              <p>Tune-ups, timing components, cooling & full overhauls.</p>
               <div class="spacer"></div>
-              <div class="actions btn-row"><a class="btn small primary" href="#engine">View details</a><a class="btn small outline" href="tel:+13682996461">Call</a></div>
+              <div class="actions btn-row">
+                <a class="btn small primary" href="#engine">View details</a>
+                <a class="btn small outline" href="tel:+13682996461">Call</a>
+              </div>
             </div>
           </article>
 
-          <article class="service-card" style="--bg:url('img/hero/hero-transmission.jpeg');">
+          <!-- Transmission Repair -->
+          <article class="service-card">
+            <picture class="bg">
+              <source type="image/avif" srcset="
+                img/hero/hero-transmission-640.avif   640w,
+                img/hero/hero-transmission-960.avif   960w,
+                img/hero/hero-transmission-1280.avif 1280w,
+                img/hero/hero-transmission-1600.avif 1600w" sizes="(max-width:700px) 100vw, (max-width:1024px) 50vw, 33vw">
+              <source type="image/webp" srcset="
+                img/hero/hero-transmission-640.webp   640w,
+                img/hero/hero-transmission-960.webp   960w,
+                img/hero/hero-transmission-1280.webp 1280w,
+                img/hero/hero-transmission-1600.webp 1600w" sizes="(max-width:700px) 100vw, (max-width:1024px) 50vw, 33vw">
+              <img src="img/hero/hero-transmission.jpeg" alt="" aria-hidden="true" width="1600" height="1066" decoding="async">
+            </picture>
             <div class="content">
               <h3>Transmission Repair</h3>
               <p>Manual & automatic diagnostics, clutch & service.</p>
               <div class="spacer"></div>
-              <div class="actions btn-row"><a class="btn small primary" href="#transmission">View details</a><a class="btn small outline" href="https://wa.me/13682996461" target="_blank" rel="noopener">WhatsApp</a></div>
+              <div class="actions btn-row">
+                <a class="btn small primary" href="#transmission">View details</a>
+                <a class="btn small outline" href="https://wa.me/13682996461" target="_blank" rel="noopener">WhatsApp</a>
+              </div>
             </div>
           </article>
 
-          <article class="service-card" style="--bg:url('img/hero/hero-suspension.jpeg');">
+          <!-- Suspension Repair -->
+          <article class="service-card">
+            <picture class="bg">
+              <source type="image/avif" srcset="
+                img/hero/hero-suspension-640.avif   640w,
+                img/hero/hero-suspension-960.avif   960w,
+                img/hero/hero-suspension-1280.avif 1280w,
+                img/hero/hero-suspension-1600.avif 1600w" sizes="(max-width:700px) 100vw, (max-width:1024px) 50vw, 33vw">
+              <source type="image/webp" srcset="
+                img/hero/hero-suspension-640.webp   640w,
+                img/hero/hero-suspension-960.webp   960w,
+                img/hero/hero-suspension-1280.webp 1280w,
+                img/hero/hero-suspension-1600.webp 1600w" sizes="(max-width:700px) 100vw, (max-width:1024px) 50vw, 33vw">
+              <img src="img/hero/hero-suspension.jpeg" alt="" aria-hidden="true" width="1600" height="1066" decoding="async">
+            </picture>
             <div class="content">
               <h3>Suspension Repair</h3>
               <p>Shocks, struts, control arms and bushings replacement.</p>
               <div class="spacer"></div>
-              <div class="actions btn-row"><a class="btn small primary" href="#suspension">View details</a><a class="btn small outline" href="tel:+13682996461">Call</a></div>
+              <div class="actions btn-row">
+                <a class="btn small primary" href="#suspension">View details</a>
+                <a class="btn small outline" href="tel:+13682996461">Call</a>
+              </div>
             </div>
           </article>
 
-          <article class="service-card" style="--bg:url('img/hero/hero-oil.jpeg');">
+          <!-- Mobile Oil Change -->
+          <article class="service-card">
+            <picture class="bg">
+              <source type="image/avif" srcset="
+                img/hero/hero-oil-640.avif   640w,
+                img/hero/hero-oil-960.avif   960w,
+                img/hero/hero-oil-1280.avif 1280w,
+                img/hero/hero-oil-1600.avif 1600w" sizes="(max-width:700px) 100vw, (max-width:1024px) 50vw, 33vw">
+              <source type="image/webp" srcset="
+                img/hero/hero-oil-640.webp   640w,
+                img/hero/hero-oil-960.webp   960w,
+                img/hero/hero-oil-1280.webp 1280w,
+                img/hero/hero-oil-1600.webp 1600w" sizes="(max-width:700px) 100vw, (max-width:1024px) 50vw, 33vw">
+              <img src="img/hero/hero-oil.jpeg" alt="" aria-hidden="true" width="1600" height="1066" decoding="async">
+            </picture>
             <div class="content">
               <h3>Mobile Oil Change</h3>
               <p>Premium oil & filter at your location. Zero waiting rooms.</p>
               <div class="spacer"></div>
-              <div class="actions btn-row"><a class="btn small primary" href="#oil">View details</a><a class="btn small outline" href="https://wa.me/13682996461" target="_blank" rel="noopener">WhatsApp</a></div>
+              <div class="actions btn-row">
+                <a class="btn small primary" href="#oil">View details</a>
+                <a class="btn small outline" href="https://wa.me/13682996461" target="_blank" rel="noopener">WhatsApp</a>
+              </div>
             </div>
           </article>
         </div>
@@ -809,7 +950,7 @@
     </section>
 
     <!-- TRUST -->
-    <section class="container" id="why">
+    <section class="container below-fold" id="why">
       <h2>Why drivers choose Mikeanic</h2>
       <div class="cards">
         <div class="card"><h3>15+ years experience</h3><p class="muted">Professional mechanic with dealership and field background. We speak English & Ukrainian.</p></div>
@@ -819,7 +960,7 @@
     </section>
 
     <!-- FUNNEL / HOW IT WORKS -->
-    <section class="container row-2" id="process">
+    <section class="container row-2 below-fold" id="process">
       <div>
         <h2>How it works</h2>
         <ol style="color:var(--muted);padding-left:18px;margin-top:10px">
@@ -841,7 +982,19 @@
         </div>
       </div>
       <div>
-        <img src="img/misc/process-visit.jpeg" alt="Mobile mechanic working on a car in Calgary" loading="lazy" />
+        <picture>
+          <source type="image/avif" srcset="
+            img/misc/process-visit-640.avif 640w,
+            img/misc/process-visit-960.avif 960w,
+            img/misc/process-visit-1280.avif 1280w" sizes="(max-width:760px) 100vw, 44vw">
+          <source type="image/webp" srcset="
+            img/misc/process-visit-640.webp 640w,
+            img/misc/process-visit-960.webp 960w,
+            img/misc/process-visit-1280.webp 1280w" sizes="(max-width:760px) 100vw, 44vw">
+          <img src="img/misc/process-visit.jpeg"
+               alt="Mobile mechanic working on a car in Calgary"
+               loading="lazy" decoding="async">
+        </picture>
       </div>
     </section>
 
@@ -859,26 +1012,42 @@
     </section> -->
 
     <!-- SERVICE DETAILS -->
-    <section class="container service" id="mobile-mechanic">
+    <section class="container service below-fold" id="mobile-mechanic">
       <div>
         <h2>Mobile Mechanic</h2>
-        <p class="muted">Convenient on‑site help for batteries, brakes, belts, alternators, sensors and routine maintenance. If a lift or special equipment is required, we arrange shop time.</p>
+        <p class="muted">Convenient on-site help for batteries, brakes, belts, alternators, sensors and routine maintenance. If a lift or special equipment is required, we arrange shop time.</p>
         <ul>
-          <li>On‑site inspection and quick fixes</li>
+          <li>On-site inspection and quick fixes</li>
           <li>Transparent quotes before work starts</li>
-          <li>Parts options: OEM or high‑quality aftermarket</li>
+          <li>Parts options: OEM or high-quality aftermarket</li>
         </ul>
         <div class="btn-row">
           <a class="btn primary" href="tel:+13682996461">Book mobile visit</a>
         </div>
       </div>
-      <div><img src="img/details/details-mobile-mechanic.jpeg" alt="Mechanic arriving at customer's location" loading="lazy"></div>
+      <div>
+        <picture>
+          <source type="image/avif" srcset="
+            img/details/details-mobile-mechanic-640.avif 640w,
+            img/details/details-mobile-mechanic-960.avif 960w,
+            img/details/details-mobile-mechanic-1280.avif 1280w,
+            img/details/details-mobile-mechanic-1600.avif 1600w" sizes="(min-width:760px) 50vw, 100vw">
+          <source type="image/webp" srcset="
+            img/details/details-mobile-mechanic-640.webp 640w,
+            img/details/details-mobile-mechanic-960.webp 960w,
+            img/details/details-mobile-mechanic-1280.webp 1280w,
+            img/details/details-mobile-mechanic-1600.webp 1600w" sizes="(min-width:760px) 50vw, 100vw">
+          <img src="img/details/details-mobile-mechanic.jpeg"
+               alt="Mechanic arriving at customer's location"
+               loading="lazy" decoding="async">
+        </picture>
+      </div>
     </section>
 
-    <section class="container service" id="diagnostics">
+    <section class="container service below-fold" id="diagnostics">
       <div>
         <h2>Car Diagnostics</h2>
-        <p class="muted">We combine OBD‑II scanning with manual tests to identify the root cause, not just clear codes. Full vehicle scan usually takes 30–40 minutes.</p>
+        <p class="muted">We combine OBD-II scanning with manual tests to identify the root cause, not just clear codes. Full vehicle scan usually takes 30–40 minutes.</p>
         <ul>
           <li>Engine, transmission & electronic systems</li>
           <li>Hidden faults detection</li>
@@ -886,13 +1055,29 @@
         </ul>
         <div class="btn-row"><a class="btn primary" href="tel:+13682996461">Get diagnostics</a></div>
       </div>
-      <div><img src="img/details/details-diagnostics.jpeg" alt="Diagnostics scanner connected to a car" loading="lazy"></div>
+      <div>
+        <picture>
+          <source type="image/avif" srcset="
+            img/details/details-diagnostics-640.avif 640w,
+            img/details/details-diagnostics-960.avif 960w,
+            img/details/details-diagnostics-1280.avif 1280w,
+            img/details/details-diagnostics-1600.avif 1600w" sizes="(min-width:760px) 50vw, 100vw">
+          <source type="image/webp" srcset="
+            img/details/details-diagnostics-640.webp 640w,
+            img/details/details-diagnostics-960.webp 960w,
+            img/details/details-diagnostics-1280.webp 1280w,
+            img/details/details-diagnostics-1600.webp 1600w" sizes="(min-width:760px) 50vw, 100vw">
+          <img src="img/details/details-diagnostics.jpeg"
+               alt="Diagnostics scanner connected to a car"
+               loading="lazy" decoding="async">
+        </picture>
+      </div>
     </section>
 
-    <section class="container service" id="engine">
+    <section class="container service below-fold" id="engine">
       <div>
         <h2>Engine Repair</h2>
-        <p class="muted">From tune‑ups and sensor replacement to timing kits and full rebuilds — we service gasoline and diesel engines.</p>
+        <p class="muted">From tune-ups and sensor replacement to timing kits and full rebuilds — we service gasoline and diesel engines.</p>
         <ul>
           <li>Timing belt/chain, water pump & seals</li>
           <li>Cooling system repair and flush</li>
@@ -900,10 +1085,26 @@
         </ul>
         <div class="btn-row"><a class="btn primary" href="tel:+13682996461">Talk about your engine</a></div>
       </div>
-      <div><img src="img/details/details-engine.jpeg" alt="Engine bay after professional repair" loading="lazy"></div>
+      <div>
+        <picture>
+          <source type="image/avif" srcset="
+            img/details/details-engine-640.avif 640w,
+            img/details/details-engine-960.avif 960w,
+            img/details/details-engine-1280.avif 1280w,
+            img/details/details-engine-1600.avif 1600w" sizes="(min-width:760px) 50vw, 100vw">
+          <source type="image/webp" srcset="
+            img/details/details-engine-640.webp 640w,
+            img/details/details-engine-960.webp 960w,
+            img/details/details-engine-1280.webp 1280w,
+            img/details/details-engine-1600.webp 1600w" sizes="(min-width:760px) 50vw, 100vw">
+          <img src="img/details/details-engine.jpeg"
+               alt="Engine bay after professional repair"
+               loading="lazy" decoding="async">
+        </picture>
+      </div>
     </section>
 
-    <section class="container service" id="transmission">
+    <section class="container service below-fold" id="transmission">
       <div>
         <h2>Transmission Repair</h2>
         <p class="muted">Professional service for manual and automatic transmissions. We diagnose slipping, harsh shifts, leaks and noises.</p>
@@ -914,10 +1115,26 @@
         </ul>
         <div class="btn-row"><a class="btn primary" href="tel:+13682996461">Fix my transmission</a></div>
       </div>
-      <div><img src="img/details/details-transmission.jpeg" alt="Transmission and clutch service" loading="lazy"></div>
+      <div>
+        <picture>
+          <source type="image/avif" srcset="
+            img/details/details-transmission-640.avif 640w,
+            img/details/details-transmission-960.avif 960w,
+            img/details/details-transmission-1280.avif 1280w,
+            img/details/details-transmission-1600.avif 1600w" sizes="(min-width:760px) 50vw, 100vw">
+          <source type="image/webp" srcset="
+            img/details/details-transmission-640.webp 640w,
+            img/details/details-transmission-960.webp 960w,
+            img/details/details-transmission-1280.webp 1280w,
+            img/details/details-transmission-1600.webp 1600w" sizes="(min-width:760px) 50vw, 100vw">
+          <img src="img/details/details-transmission.jpeg"
+               alt="Transmission and clutch service"
+               loading="lazy" decoding="async">
+        </picture>
+      </div>
     </section>
 
-    <section class="container service" id="suspension">
+    <section class="container service below-fold" id="suspension">
       <div>
         <h2>Suspension Repair</h2>
         <p class="muted">We restore comfort and safety by repairing worn suspension components.</p>
@@ -928,24 +1145,56 @@
         </ul>
         <div class="btn-row"><a class="btn primary" href="tel:+13682996461">Get a quote</a></div>
       </div>
-      <div><img src="img/details/details-suspension.jpeg" alt="Suspension components" loading="lazy"></div>
+      <div>
+        <picture>
+          <source type="image/avif" srcset="
+            img/details/details-suspension-640.avif 640w,
+            img/details/details-suspension-960.avif 960w,
+            img/details/details-suspension-1280.avif 1280w,
+            img/details/details-suspension-1600.avif 1600w" sizes="(min-width:760px) 50vw, 100vw">
+          <source type="image/webp" srcset="
+            img/details/details-suspension-640.webp 640w,
+            img/details/details-suspension-960.webp 960w,
+            img/details/details-suspension-1280.webp 1280w,
+            img/details/details-suspension-1600.webp 1600w" sizes="(min-width:760px) 50vw, 100vw">
+          <img src="img/details/details-suspension.jpeg"
+               alt="Suspension components"
+               loading="lazy" decoding="async">
+        </picture>
+      </div>
     </section>
 
-    <section class="container service" id="oil">
+    <section class="container service below-fold" id="oil">
       <div>
         <h2>Mobile Oil Change</h2>
         <p class="muted">Save time — we replace oil & filter at your place and dispose of the old fluid responsibly.</p>
         <ul>
-          <li>Premium oil & OEM‑grade filters</li>
+          <li>Premium oil & OEM-grade filters</li>
           <li>Service reminder reset</li>
-          <li>Multi‑point safety check</li>
+          <li>Multi-point safety check</li>
         </ul>
         <div class="btn-row"><a class="btn primary" href="tel:+13682996461">Book oil change</a></div>
       </div>
-      <div><img src="img/details/details-oil.jpeg" alt="Mobile oil change under the hood" loading="lazy"></div>
+      <div>
+        <picture>
+          <source type="image/avif" srcset="
+            img/details/details-oil-640.avif 640w,
+            img/details/details-oil-960.avif 960w,
+            img/details/details-oil-1280.avif 1280w,
+            img/details/details-oil-1600.avif 1600w" sizes="(min-width:760px) 50vw, 100vw">
+          <source type="image/webp" srcset="
+            img/details/details-oil-640.webp 640w,
+            img/details/details-oil-960.webp 960w,
+            img/details/details-oil-1280.webp 1280w,
+            img/details/details-oil-1600.webp 1600w" sizes="(min-width:760px) 50vw, 100vw">
+          <img src="img/details/details-oil.jpeg"
+               alt="Mobile oil change under the hood"
+               loading="lazy" decoding="async">
+        </picture>
+      </div>
     </section>
 
-    <section class="container row-2" id="use-cases">
+    <section class="container row-2 below-fold" id="use-cases">
       <div>
         <h2>When to call a mobile mechanic</h2>
         <ul class="muted" style="margin-top:10px">
@@ -961,15 +1210,23 @@
         </div>
       </div>
       <div>
-        <img
-          src="img/mm.jpeg"
-          alt="Mobile mechanic working by a car at the customer's location"
-          loading="lazy"
-        >
+        <picture>
+          <source type="image/avif" srcset="
+            img/mm-640.avif 640w,
+            img/mm-960.avif 960w,
+            img/mm-1280.avif 1280w" sizes="(max-width:760px) 100vw, 44vw">
+          <source type="image/webp" srcset="
+            img/mm-640.webp 640w,
+            img/mm-960.webp 960w,
+            img/mm-1280.webp 1280w" sizes="(max-width:760px) 100vw, 44vw">
+          <img src="img/mm.jpeg"
+               alt="Mobile mechanic working by a car at the customer's location"
+               loading="lazy" decoding="async">
+        </picture>
       </div>
     </section>
 
-    <section class="container faq" id="faq">
+    <section class="container faq below-fold" id="faq">
       <h2>Frequently asked questions</h2>
 
       <details>
@@ -1003,7 +1260,7 @@
     </section>
 
     <!-- CTA -->
-    <section class="container cta" id="cta">
+    <section class="container cta below-fold" id="cta">
       <h2>Ready to get back on the road?</h2>
       <p class="muted">Call now for a free estimate. Comprehensive diagnostics are free with repair.</p>
       <div class="btn-row">
@@ -1060,39 +1317,11 @@
   </script>
 
   <script>
-    const track = document.getElementById('sliderTrack');
-    const dots = document.getElementById('dots');
-    const prev = document.querySelector('.nav-btn.prev');
-    const next = document.querySelector('.nav-btn.next');
-
-    function updateDots(){
-      const slides = Array.from(track.children);
-      const idx = Math.round(track.scrollLeft / (track.clientWidth * 0.85));
-      dots.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active', i===idx));
-    }
-    function buildDots(){
-      dots.innerHTML = '';
-      const count = track.children.length;
-      for(let i=0;i<count;i++){
-        const d=document.createElement('div');d.className='dot'+(i===0?' active':'');
-        d.addEventListener('click',()=>{
-          const w = track.clientWidth*0.85; track.scrollTo({left:w*i, behavior:'smooth'});
-        });
-        dots.appendChild(d);
-      }
-    }
-    function nudge(dir){
-      const w = track.clientWidth*0.85; track.scrollBy({left:w*dir, behavior:'smooth'});
-    }
-    prev.addEventListener('click',()=>nudge(-1));
-    next.addEventListener('click',()=>nudge(1));
-    track.addEventListener('scroll',()=>{window.requestAnimationFrame(updateDots)});
-    window.addEventListener('resize',updateDots);
-    buildDots();
-    updateDots();
-
-    // footer year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    (function(){
+      const track = document.getElementById('sliderTrack');
+      if(!track) return;
+      document.getElementById('year').textContent = new Date().getFullYear();
+    })();
 
     /* LEGACY SLIDER JS (COMMENTED OUT) */
     /*
