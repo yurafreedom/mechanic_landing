@@ -367,6 +367,267 @@
     .header .brand{min-width:0}
     .pill{padding-inline:12px} /* при необходимости уменьшить кнопки в правом краю */
 
+    /* базові кнопки */
+    .btn{
+      display:inline-flex; align-items:center; gap:.6rem;
+      padding:.65rem 1rem; border-radius:999px;
+      font-weight:700; line-height:1; width:auto; min-width:0;
+      white-space:nowrap;                      /* не переносимо текст */
+    }
+    .btn.primary{ background:var(--brand); color:#111; }
+    .btn.outline{ background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.2); }
+
+    /* варіант кнопки з іконкою дзвінка */
+    .btn--call svg{ width:1.1em; height:1.1em; flex:0 0 auto; }
+
+    /* на дуже вузьких екранах можна сховати підпис і лишити іконку */
+    @media (max-width:360px){
+      .btn--call .label{ display:none; }
+    }
+
+    /* висота липкої шапки (підстав свою, наприклад 64–72px) */
+    :root{ --header-h: 72px; }
+
+    html{ scroll-behavior:smooth; }             /* плавний скрол (не обов'язково) */
+
+    /* усім секціям-цілям додаємо відступ для якоря */
+    .service{ scroll-margin-top: calc(var(--header-h) + 12px); }
+
+    /* якщо є інші якорі (наприклад #why, #process) — теж можна */
+    [id]{ scroll-margin-top: calc(var(--header-h) + 12px); }  /* опціонально */
+
+    /* уже було: плавний скрол і компенсація липкої шапки */
+    :root{ --header-h: 72px; }
+    .service, #use-cases, #faq { scroll-margin-top: calc(var(--header-h) + 12px); }
+
+    /* сітка "картинка + текст" */
+    .row-2{
+      display:grid; gap:24px; align-items:center;
+      grid-template-columns: 1fr;      /* мобільний */
+    }
+    .row-2 > div img{
+      width:100%; height:auto; display:block;
+      border-radius:20px;              /* як на сервісних картках */
+    }
+    @media (min-width: 860px){
+      .row-2{ grid-template-columns: 1.05fr .95fr; gap:36px; }
+    }
+
+    /* FAQ */
+    .faq details{
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:14px;
+      padding:14px 16px;
+      background:rgba(255,255,255,.02);
+    }
+    .faq details + details{ margin-top:10px; }
+    .faq summary{
+      cursor:pointer; list-style:none; position:relative;
+      font-weight:700; color:var(--text);
+    }
+    .faq summary::-webkit-details-marker{ display:none; }
+    .faq details[open]{ background:rgba(255,255,255,.035); }
+    .faq .answer{ color:var(--muted); margin-top:10px; }
+
+    /* невеликий плюсик-іконка справа (опціонально) */
+    .faq summary::after{
+      content:'+'; position:absolute; right:0; top:0; font-weight:800;
+    }
+    .faq details[open] summary::after{ content:'–'; }
+
+    /* -------------------------------
+       ВЕРТИКАЛЬНИЙ РИТМ + ВІДСТУПИ
+       ДОДАТИ В КІНЕЦЬ CSS
+    -------------------------------- */
+    :root{
+      --space-1: 8px;
+      --space-2: 12px;
+      --space-3: 16px;
+      --space-4: 24px;
+      --space-5: 32px;
+    }
+
+    /* Базові відступи всередині секцій */
+    section.container{
+      padding-top: clamp(28px, 3vw, 42px);
+      padding-bottom: clamp(28px, 3vw, 42px);
+    }
+
+    /* Заголовки і текстовий потік */
+    .container h2{ margin: 0 0 var(--space-3); line-height: 1.15; }
+    .container p{ margin: var(--space-2) 0 0; }
+
+    /* Списки */
+    .container ul{ 
+      margin: var(--space-2) 0 0; 
+      padding-left: 1.25rem;           /* щоб маркери не «липли» */
+    }
+    .container li{ 
+      margin: var(--space-1) 0; 
+      line-height: 1.55;               /* читабельна міжрядкова */
+    }
+
+    /* Ряд кнопок під текстом */
+    .btn-row{ 
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: var(--space-2); 
+      margin-top: var(--space-3); 
+    }
+
+    /* Двоколонка «коли зручно» */
+    .row-2{ 
+      display: grid; 
+      gap: var(--space-4); 
+      align-items: center; 
+    }
+    .row-2 > div:first-child > * + *{  /* відступи між елементами зліва */
+      margin-top: var(--space-2);
+    }
+    .row-2 img{ 
+      width: 100%; 
+      height: auto; 
+      display: block; 
+      border-radius: 20px; 
+    }
+    @media (min-width: 860px){
+      .row-2{ grid-template-columns: 1.05fr .95fr; gap: var(--space-4); }
+    }
+
+    /* FAQ: відступи між заголовком і картками, інтервали між картками */
+    #faq{ 
+      margin-top: var(--space-5);          /* відступ зверху перед блоком FAQ */
+      scroll-margin-top: calc(var(--header-h,72px) + 12px);
+    }
+    #faq h2{ margin: 0 0 var(--space-3); }
+
+    .faq details{
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.02);
+      border-radius: 14px;
+    }
+    .faq details + details{ margin-top: var(--space-2); }
+    .faq summary{ font-weight: 700; cursor: pointer; }
+    .faq .answer{ margin-top: var(--space-2); color: var(--muted); }
+
+    /* (Необов’язково) маркер списку м’якший */
+    .container li::marker{ color: rgba(255,255,255,.5); }
+
+    /* =========================================================
+       USE-CASES (Коли зручно викликати мобільного механіка)
+       гарантовано перебиває попередні стилі
+       ========================================================= */
+    #use-cases { 
+      padding-top: clamp(28px,3vw,42px);
+      padding-bottom: clamp(28px,3vw,42px);
+    }
+
+    #use-cases h2{
+      margin: 0 0 45px !important;
+      line-height: 1.15;
+    }
+
+    #use-cases p{
+      margin: 12px 0 0 !important;
+    }
+
+    #use-cases ul{
+      margin: 12px 0 0 !important;      /* відступ зверху */
+      padding-left: 1.25rem !important;  /* щоб маркери не прилипали */
+    }
+
+    #use-cases li + li{
+      margin-top: 8px !important;        /* інтервал між пунктами */
+      line-height: 1.55;
+    }
+
+    #use-cases .btn-row{
+      margin-top: 60px !important;       /* від списку до кнопок */
+      display: flex; flex-wrap: wrap; gap: 12px;
+    }
+
+    /* двоколонка: текст + картинка */
+    #use-cases .row-2{
+      display: grid !important;
+      grid-template-columns: 1fr;
+      gap: 24px !important;
+      align-items: center;
+    }
+
+    #use-cases .row-2 img{
+      width: 100%; height: auto; display: block;
+      border-radius: 20px;
+    }
+
+    @media (min-width: 860px){
+      #use-cases .row-2{
+        grid-template-columns: 1.05fr .95fr !important;
+        gap: 36px !important;
+      }
+    }
+
+    /* =========================================================
+       FAQ (Часті запитання) — відступи і інтервали між картками
+       ========================================================= */
+    #faq{
+      margin-top: 36px !important;                /* відступ перед блоком */
+      scroll-margin-top: calc(var(--header-h,72px) + 12px);
+    }
+
+    #faq h2{
+      margin: 0 0 16px !important;                /* від заголовка до першої карточки */
+    }
+
+    #faq .faq details{
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      padding: 14px 16px;
+      background: rgba(255,255,255,.02);
+    }
+
+    #faq .faq details + details{
+      margin-top: 12px !important;                /* інтервал між питаннями */
+    }
+
+    #faq .faq summary{
+      cursor: pointer; font-weight: 700;
+    }
+
+    #faq .faq .answer{
+      margin-top: 10px; color: var(--muted);
+    }
+
+    /* маркер списку пом’якшити */
+    #use-cases li::marker{ color: rgba(255,255,255,.5); }
+ 
+
+    /* ==== SPACING FIX (drop-in override) ==== */
+
+    /* Базовый вертикальный ритм внутри .container */
+    .container > h2{ margin:0 0 16px !important; line-height:1.15; }
+    .container > p{  margin:12px 0 0 !important; }
+    .container ul{  margin:12px 0 0 !important; padding-left:1.25rem !important; }
+    .container li + li{ margin-top:8px !important; }
+    .container .btn-row{ margin-top:18px !important; display:flex; flex-wrap:wrap; gap:12px !important; }
+
+    /* Коли зручно викликати…  (id="use-cases") */
+    #use-cases{ padding-top:clamp(28px,3vw,42px); padding-bottom:clamp(28px,3vw,42px); }
+    #use-cases .row-2{ display:grid !important; gap:24px !important; align-items:center; }
+    #use-cases .row-2 img{ width:100%; height:auto; display:block; border-radius:20px; }
+    @media (min-width:860px){
+      #use-cases .row-2{ grid-template-columns:1.05fr .95fr !important; gap:36px !important; }
+    }
+
+    /* Часті запитання (id="faq") */
+    #faq{ margin-top:36px !important; scroll-margin-top:calc(var(--header-h,72px) + 12px); }
+    #faq > h2{ margin:0 0 60px !important; }
+    #faq details + details{ margin-top:12px !important; }
+    #faq .answer{ margin-top:10px !important; color:var(--muted); }
+
+    /* маркеры списков мягче */
+    .container li::marker{ color:rgba(255,255,255,.5); }
+
   </style>
 </head>
 <body>
@@ -377,7 +638,13 @@
       </div>
       <div class="cta-inline">
         <a class="btn small outline" href="#services">Services</a>
-        <a class="btn small primary" href="tel:+13682996461" aria-label="Call Mikeanic now">Call: (368) 299‑6461</a>
+        <a class="btn primary btn--call" href="tel:+13682996461">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="ico">
+            <path fill="currentColor" d="M6.6,10.8c1.2,2.2,3.1,4.1,5.3,5.3l1.8-1.8c.3-.3.8-.4,1.2-.3 1,.3 2.1.5 3.2.5.7,0 1.3.6 1.3,1.3v3.2c0,.7-.6,1.3-1.3,1.3C9.7,21.3,2.7,14.3,2.7,5.9c0-.7.6-1.3,1.3-1.3H7.2c.7,0,1.3.6,1.3,1.3 0,1.1.2,2.2.5,3.2.1.4,0,.9-.3,1.2Z"/>
+          </svg>
+          <span class="label">Call:</span>
+          <span class="num">(368) 299-6461</span>
+        </a>
       </div>
     </div>
   </header>
@@ -562,7 +829,13 @@
           <li><strong>You drive away</strong> with a safe, smooth car.</li>
         </ol>
         <div class="btn-row" style="margin-top:14px">
-          <a class="btn primary" href="tel:+13682996461">Call (368) 299‑6461</a>
+          <a class="btn primary btn--call" href="tel:+13682996461">
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="ico">
+              <path fill="currentColor" d="M6.6,10.8c1.2,2.2,3.1,4.1,5.3,5.3l1.8-1.8c.3-.3.8-.4,1.2-.3 1,.3 2.1.5 3.2.5.7,0 1.3.6 1.3,1.3v3.2c0,.7-.6,1.3-1.3,1.3C9.7,21.3,2.7,14.3,2.7,5.9c0-.7.6-1.3,1.3-1.3H7.2c.7,0,1.3.6,1.3,1.3 0,1.1.2,2.2.5,3.2.1.4,0,.9-.3,1.2Z"/>
+            </svg>
+            <span class="label">Call:</span>
+            <span class="num">(368) 299-6461</span>
+          </a>
           <a class="btn outline" href="https://wa.me/13682996461" target="_blank" rel="noopener">WhatsApp</a>
           <a class="btn outline" href="https://t.me/+380631046859" target="_blank" rel="noopener">Telegram</a>
         </div>
@@ -573,7 +846,7 @@
     </section>
 
     <!-- OVERVIEW GRID -->
-    <section class="container" id="services">
+<!--     <section class="container" id="services">
       <h2>Services we offer</h2>
       <div class="grid">
         <a class="service-mini" href="#mobile-mechanic"><img src="img/grid/grid-mobile-mechanic.jpeg" alt="Mobile mechanic service" loading="lazy"><h3>Mobile Mechanic</h3><p class="muted">We come to you for most jobs.</p></a>
@@ -583,7 +856,7 @@
         <a class="service-mini" href="#suspension"><img src="img/grid/grid-susp.jpeg" alt="Suspension repair" loading="lazy"><h3>Suspension Repair</h3><p class="muted">Shocks, struts, control arms.</p></a>
         <a class="service-mini" href="#oil"><img src="img/grid/grid-oil.jpeg" alt="Mobile oil change" loading="lazy"><h3>Mobile Oil Change</h3><p class="muted">Premium oil at your place.</p></a>
       </div>
-    </section>
+    </section> -->
 
     <!-- SERVICE DETAILS -->
     <section class="container service" id="mobile-mechanic">
@@ -672,12 +945,75 @@
       <div><img src="img/details/details-oil.jpeg" alt="Mobile oil change under the hood" loading="lazy"></div>
     </section>
 
+    <section class="container row-2" id="use-cases">
+      <div>
+        <h2>When to call a mobile mechanic</h2>
+        <ul class="muted" style="margin-top:10px">
+          <li><strong>The car won’t start</strong> — save on towing and time.</li>
+          <li><strong>No service slot available</strong> — we’ll come at a convenient time.</li>
+          <li><strong>Office / home / parking</strong> — diagnostics and minor work at your location.</li>
+          <li><strong>Pre-purchase inspection</strong> — on-site visit with equipment.</li>
+          <li><strong>Scheduled maintenance</strong> — oil & filter change with no waiting.</li>
+        </ul>
+        <div class="btn-row" style="margin-top:14px">
+          <a class="btn primary" href="tel:+13682996461">Book on-site visit</a>
+          <a class="btn outline" href="#faq">FAQ</a>
+        </div>
+      </div>
+      <div>
+        <img
+          src="img/mm.jpeg"
+          alt="Mobile mechanic working by a car at the customer's location"
+          loading="lazy"
+        >
+      </div>
+    </section>
+
+    <section class="container faq" id="faq">
+      <h2>Frequently asked questions</h2>
+
+      <details>
+        <summary>What do you repair on-site, and what requires the shop?</summary>
+        <div class="answer">
+          On-site: diagnostics, brakes, battery, sensors, minor electrical/mechanical jobs,
+          oil and filter changes. Complex operations (timing systems, clutch, major engine /
+          transmission work) are done in the shop.
+        </div>
+      </details>
+
+      <details>
+        <summary>How long does a full diagnostic take?</summary>
+        <div class="answer">Usually 30–40 minutes. Includes OBD scanning and manual system tests.</div>
+      </details>
+
+      <details>
+        <summary>Do you provide warranty for labor and parts?</summary>
+        <div class="answer">Yes. Labor is warranted; parts depend on the manufacturer (OEM/aftermarket).</div>
+      </details>
+
+      <details>
+        <summary>Can you come in the evening or on weekends?</summary>
+        <div class="answer">Yes, by appointment. Same-day service is sometimes available.</div>
+      </details>
+
+      <details>
+        <summary>How do I pay?</summary>
+        <div class="answer">Cash / card / transfer. We confirm the estimate before work starts.</div>
+      </details>
+    </section>
+
     <!-- CTA -->
     <section class="container cta" id="cta">
       <h2>Ready to get back on the road?</h2>
       <p class="muted">Call now for a free estimate. Comprehensive diagnostics are free with repair.</p>
       <div class="btn-row">
-        <a class="pill primary" href="tel:+13682996461">Call (368) 299‑6461</a>
+        <a class="btn primary btn--call" href="tel:+13682996461">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="ico">
+            <path fill="currentColor" d="M6.6,10.8c1.2,2.2,3.1,4.1,5.3,5.3l1.8-1.8c.3-.3.8-.4,1.2-.3 1,.3 2.1.5 3.2.5.7,0 1.3.6 1.3,1.3v3.2c0,.7-.6,1.3-1.3,1.3C9.7,21.3,2.7,14.3,2.7,5.9c0-.7.6-1.3,1.3-1.3H7.2c.7,0,1.3.6,1.3,1.3 0,1.1.2,2.2.5,3.2.1.4,0,.9-.3,1.2Z"/>
+          </svg>
+          <span class="label">Call:</span>
+          <span class="num">(368) 299-6461</span>
+        </a>
         <a class="pill" href="https://wa.me/13682996461" target="_blank" rel="noopener">WhatsApp</a>
         <a class="pill" href="https://t.me/+380631046859" target="_blank" rel="noopener">Telegram</a>
       </div>
